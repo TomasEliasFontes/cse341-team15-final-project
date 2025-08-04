@@ -5,6 +5,7 @@ const passport = require("passport");
 const session = require("express-session");
 const githubStrategy = require("passport-github2").Strategy;
 const cors = require("cors");
+const morgan = require('morgan');
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -35,6 +36,8 @@ app
   .use(cors({methods: "GET, POST, PUT, DELETE, UPDATE, PATCH"}))
   .use(cors({origin: "*"}))
   .use("/", require("./routes"));
+
+app.use(morgan('dev'));
 
 // Passport GitHub Strategy Configuration
 passport.use(
