@@ -9,7 +9,7 @@ const doc = {
   host: process.env.SWAGGER_HOST,
   schemes: process.env.SWAGGER_SCHEMES
     ? process.env.SWAGGER_SCHEMES.split(",")
-    : ["http", "https"],
+    : ["https"],
   definitions: {
     Venue: {
       venueName: "Madison Square Garden",
