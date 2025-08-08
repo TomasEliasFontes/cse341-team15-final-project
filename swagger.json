@@ -2,10 +2,9 @@
   "swagger": "2.0",
   "info": {
     "title": "Event Ticketing - CSE341 Final Project\"",
-    "description": "API for ticking data as project2 for CSE 341",
+    "description": "API for ticketing data (Events, Venues, Customers, Tickets)",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
     "http",
@@ -21,6 +20,237 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/events/": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Get all events",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Create a new events",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Event data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Get a single event by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Update an existing event",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated event data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Events"
+        ],
+        "description": "Delete a event",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/tickets/": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "description": "Get all tickets",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "description": "Create a new ticket",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Ticket data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Ticket"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/tickets/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "description": "Get a single ticket by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Ticket ID"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Tickets"
+        ],
+        "description": "Update an existing ticket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Ticket ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated ticket data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Ticket"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tickets"
+        ],
+        "description": "Delete a ticket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Ticket ID"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/tickets/use/{id}": {
+      "put": {
+        "tags": [
+          "Tickets"
+        ],
+        "description": "Mark a ticket as used",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Ticket ID"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -250,11 +480,11 @@
         },
         "address": {
           "type": "string",
-          "example": "4 Pennsylvania Plaza, New York, NY 10001"
+          "example": "4 Pennsylvania Plaza"
         },
         "gpsCoordinates": {
           "type": "string",
-          "example": "40.7505, -73.9934"
+          "example": "40.7505,-73.9934"
         }
       }
     },
@@ -279,7 +509,77 @@
         },
         "gender": {
           "type": "string",
-          "example": "Male"
+          "example": "M"
+        }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "eventName": {
+          "type": "string",
+          "example": "Rock Concert"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2025-09-01"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2025-09-01"
+        },
+        "startTime": {
+          "type": "string",
+          "example": "20:00"
+        },
+        "endTime": {
+          "type": "string",
+          "example": "23:00"
+        },
+        "capacity": {
+          "type": "number",
+          "example": 5000
+        },
+        "eventType": {
+          "type": "string",
+          "example": "Concert"
+        },
+        "eventPrice": {
+          "type": "number",
+          "example": 120
+        },
+        "venueId": {
+          "type": "string",
+          "example": "6890b8efd801e1a85b254a29"
+        }
+      }
+    },
+    "Ticket": {
+      "type": "object",
+      "properties": {
+        "customerId": {
+          "type": "string",
+          "example": "6890b8efd801e1a85b254a2f"
+        },
+        "eventId": {
+          "type": "string",
+          "example": "68940c4315d95a5bac729f04"
+        },
+        "ticketStatus": {
+          "type": "string",
+          "example": "active"
+        },
+        "amountPaid": {
+          "type": "number",
+          "example": 120
+        },
+        "purchaseDate": {
+          "type": "string",
+          "example": "2025-08-01T10:00:00Z"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "example": "Credit Card"
         }
       }
     }
