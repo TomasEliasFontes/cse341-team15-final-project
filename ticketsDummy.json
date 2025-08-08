@@ -1,0 +1,82 @@
+[
+  {
+    "customerId": "6890b8efd801e1a85b254a2f",
+    "eventId": "68940c4315d95a5bac729f04",
+    "ticketStatus": "active",
+    "amountPaid": 120,
+    "purchaseDate": "2025-08-01T10:00:00Z",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a30",
+    "eventId": "68940c4315d95a5bac729f04",
+    "ticketStatus": "active",
+    "amountPaid": 120,
+    "purchaseDate": "2025-08-02T15:00:00Z",
+    "paymentMethod": "PayPal"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a31",
+    "eventId": "68940c4315d95a5bac729f05",
+    "ticketStatus": "active",
+    "amountPaid": 75,
+    "purchaseDate": "2025-08-03T09:00:00Z",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a32",
+    "eventId": "68940c4315d95a5bac729f05",
+    "ticketStatus": "used",
+    "amountPaid": 75,
+    "purchaseDate": "2025-08-04T13:30:00Z",
+    "paymentMethod": "Debit Card"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a33",
+    "eventId": "68940c4315d95a5bac729f06",
+    "ticketStatus": "cancelled",
+    "amountPaid": 50,
+    "purchaseDate": "2025-08-05T11:00:00Z",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a31",
+    "eventId": "68940c4315d95a5bac729f06",
+    "ticketStatus": "active",
+    "amountPaid": 50,
+    "purchaseDate": "2025-08-06T18:00:00Z",
+    "paymentMethod": "Cash"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a32",
+    "eventId": "68940c4315d95a5bac729f07",
+    "ticketStatus": "active",
+    "amountPaid": 90,
+    "purchaseDate": "2025-08-07T17:00:00Z",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a2f",
+    "eventId": "68940c4315d95a5bac729f07",
+    "ticketStatus": "used",
+    "amountPaid": 90,
+    "purchaseDate": "2025-08-08T16:00:00Z",
+    "paymentMethod": "Debit Card"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a30",
+    "eventId": "68940c4315d95a5bac729f08",
+    "ticketStatus": "active",
+    "amountPaid": 150,
+    "purchaseDate": "2025-08-09T14:00:00Z",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "customerId": "6890b8efd801e1a85b254a33",
+    "eventId": "68940c4315d95a5bac729f08",
+    "ticketStatus": "active",
+    "amountPaid": 150,
+    "purchaseDate": "2025-08-10T12:00:00Z",
+    "paymentMethod": "PayPal"
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "eventName": "Rock Concert",
+    "venueId": "6890b8efd801e1a85b254a29",
+    "startDate": "2025-09-01",
+    "endDate": "2025-09-01",
+    "startTime": "20:00",
+    "endTime": "23:00",
+    "capacity": 5000,
+    "eventType": "Concert",
+    "eventPrice": 120
+  },
+  {
+    "eventName": "Football Match",
+    "venueId": "6890b8efd801e1a85b254a2b",
+    "startDate": "2025-09-10",
+    "endDate": "2025-09-10",
+    "startTime": "18:30",
+    "endTime": "21:00",
+    "capacity": 40000,
+    "eventType": "Sports",
+    "eventPrice": 75
+  },
+  {
+    "eventName": "Theater Play",
+    "venueId": "6890b8efd801e1a85b254a2a",
+    "startDate": "2025-09-15",
+    "endDate": "2025-09-15",
+    "startTime": "19:00",
+    "endTime": "21:30",
+    "capacity": 1200,
+    "eventType": "Theater",
+    "eventPrice": 50
+  },
+  {
+    "eventName": "Opera Night",
+    "venueId": "6890b8efd801e1a85b254a2c",
+    "startDate": "2025-09-20",
+    "endDate": "2025-09-20",
+    "startTime": "20:00",
+    "endTime": "23:30",
+    "capacity": 2000,
+    "eventType": "Opera",
+    "eventPrice": 90
+  },
+  {
+    "eventName": "Music Festival",
+    "venueId": "6890b8efd801e1a85b254a2d",
+    "startDate": "2025-09-25",
+    "endDate": "2025-09-27",
+    "startTime": "16:00",
+    "endTime": "02:00",
+    "capacity": 80000,
+    "eventType": "Festival",
+    "eventPrice": 150
+  }
+]
