@@ -28,18 +28,20 @@ router.get("/auth", (req, res) => {
   );
 });
 
-router.get(
-  "/auth/github/callback",
-  //#swagger.ignore = true
-  passport.authenticate("github", {
-    failureRedirect: "/api-docs",
-  }),
-  (req, res) => {
-    // Successful authentication
-    req.session.user = req.user;
+router.get("/auth/github/callback", (req, res, next) => {
+  passport.authenticate("github", (err, user, info) => {
+    if (err) {
+      console.error("Error en auth callback:", err);
+      return res.status(500).json({ error: "Error", message: err.message });
+    }
+    if (!user) {
+      return res.status(401).json({ error: "Unauthorized", message: "No se pudo autenticar." });
+    }
+    req.session.user = user;
     res.redirect("/auth");
-  }
-);
+  })(req, res, next);
+});
+
 
 router.get(
   "/logout",
