@@ -1,3 +1,4 @@
+// server.js
 require("dotenv").config();
 const express = require("express");
 const mongodb = require("./db/connect");
@@ -5,15 +6,16 @@ const passport = require("passport");
 const session = require("express-session");
 const githubStrategy = require("passport-github2").Strategy;
 const cors = require("cors");
-const morgan = require('morgan');
-const port = process.env.PORT || 8080;
+const morgan = require("morgan");
+
 const app = express();
 
-// Middleware to parse JSON request bodies
+// Middleware
 app
   .use(express.json())
   .use(
     session({
+      // session secret comes from .env (fall back to a default for local dev)
       secret: process.env.SESSION_SECRET || "default_secret",
       resave: false,
       saveUninitialized: false,
@@ -21,6 +23,7 @@ app
   )
   .use(passport.initialize())
   .use(passport.session())
+  // CORS & headers
   .use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -33,13 +36,16 @@ app
     );
     next();
   })
-  .use(cors({methods: "GET, POST, PUT, DELETE, UPDATE, PATCH"}))
-  .use(cors({origin: "*"}))
+  .use(cors({ methods: "GET, POST, PUT, DELETE, UPDATE, PATCH" }))
+  .use(cors({ origin: "*" }))
   .use("/", require("./routes"));
 
-app.use(morgan('dev'));
+// request logging
+app.use(morgan("dev"));
 
-// Passport GitHub Strategy Configuration
+// -----------------------------
+// Passport GitHub Strategy
+// -----------------------------
 passport.use(
   new githubStrategy(
     {
@@ -48,7 +54,8 @@ passport.use(
       callbackURL: process.env.GITHUB_CALLBACK_URL,
     },
     (accessToken, refreshToken, profile, done) => {
-      // For simplicity, we will just return the profile
+      // For simplicity, return the profile object.
+      // In a real app, you'd lookup or create a user record here.
       return done(null, profile);
     }
   )
@@ -64,7 +71,9 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-// 404 Error Handler - Must be after all other routes
+// -----------------------------
+// 404 handler (must be after routes)
+// -----------------------------
 app.use((req, res) => {
   res.status(404).json({
     error: "Not Found",
@@ -73,11 +82,13 @@ app.use((req, res) => {
   });
 });
 
-// Global Error Handler
+// -----------------------------
+// Global error handler
+// -----------------------------
 app.use((err, req, res, next) => {
   console.error("Global error handler:", err);
 
-  // If response was already sent, delegate to default Express error handler
+  // If headers already sent, delegate to default express error handler
   if (res.headersSent) {
     return next(err);
   }
@@ -89,14 +100,35 @@ app.use((err, req, res, next) => {
   });
 });
 
+// -----------------------------
+// Initialize MongoDB and start server conditionally
+// -----------------------------
+// We initialize the DB here. If this file is executed directly (node server.js)
+// we will start the HTTP server after DB init. If the file is imported (e.g.
+// by tests using supertest), we will NOT start the server automatically.
 mongodb.initDb((err) => {
   if (err) {
     console.error("Failed to connect to MongoDB:", err);
-    process.exit(1);
+
+    // If running as main process, exit with failure; otherwise throw so tests can catch it
+    if (require.main === module) {
+      process.exit(1);
+    } else {
+      // When imported in tests, throwing will let the test fail/handle DB init error.
+      throw err;
+    }
   }
+
   console.log("Connected to MongoDB");
+
+  // Start the HTTP server only when this file is executed directly.
+  if (require.main === module) {
+    const port = process.env.PORT || 8080;
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Export the app object for use in tests (supertest) or other modules
+module.exports = app;
