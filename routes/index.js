@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
-const {isAuthenticated} = require("../middleware/authenticate");
+const jwt = require("jsonwebtoken"); // <-- Added
+const { isAuthenticated } = require("../middleware/authenticate");
 
 const router = express.Router();
 
@@ -16,12 +17,12 @@ router.get("/", (req, res) => {
 router.get(
   "/login",
   //#swagger.ignore = true
-  passport.authenticate("github", {scope: ["user:email"]})
+  passport.authenticate("github", { scope: ["user:email"] })
 );
 
 router.get("/auth", (req, res) => {
-    //#swagger.ignore = true
-    res.send(
+  //#swagger.ignore = true
+  res.send(
     req.session.user !== undefined
       ? `Logged in as ${req.session.user.username}`
       : "Logged Out"
@@ -31,17 +32,34 @@ router.get("/auth", (req, res) => {
 router.get("/auth/github/callback", (req, res, next) => {
   passport.authenticate("github", (err, user, info) => {
     if (err) {
-      console.error("Error en auth callback:", err);
+      console.error("Error in auth callback:", err);
       return res.status(500).json({ error: "Error", message: err.message });
     }
     if (!user) {
-      return res.status(401).json({ error: "Unauthorized", message: "No se pudo autenticar." });
+      return res.status(401).json({
+        error: "Unauthorized",
+        message: "Authentication failed.",
+      });
     }
+
+    // Save user in session
     req.session.user = user;
-    res.redirect("/auth");
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    // Send token as JSON (so you can use it in Authorization header later)
+    res.json({
+      message: "Login successful",
+      token: token,
+      user: user,
+    });
   })(req, res, next);
 });
-
 
 router.get(
   "/logout",
